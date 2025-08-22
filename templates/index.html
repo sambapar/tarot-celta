@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tirada Celta - Interfaz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: purple;
+      color: black;
+      max-width: 980px;
+      margin: 18px auto;
+      padding: 18px;
+    }
+    h1 {
+      margin: 0 0 16px;
+      text-align: center;
+      color: gold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .card {
+      background: #ffffffcc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      backdrop-filter: blur(4px);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid #edf2f7;
+    }
+    input[type=number], select {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+    }
+    .controls {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    button.primary { background: #2563eb; color: #fff; border-color: #1e40af; }
+    button.danger { background: #ef4444; color: #fff; border-color: #b91c1c; }
+    pre {
+      background: black;
+      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      min-height: 80px;
+      overflow-x: auto;
+    }
+    .muted { color: #475569; }
+    .error { color: #b91c1c; font-weight: bold; }
+    @media(max-width:600px){ input[type=number]{ width:70px; } }
+  </style>
+</head>
+<body>
+  <h1>Tirada Celta </h1>
+  <div class="card">
+    <p class="muted">Introduce 10 números (0–21) y la posición: <strong>d</strong> = derecho, <strong>r</strong> = revés. Pulsa <em>Interpretar tirada</em> para enviar al servidor.</p>
+
+    <form id="tirada-form">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Arcano (0–21)</th><th>Posición (d/r)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><input type="number" id="numero0" min="0" max="21" required></td><td>
+            <select id="posicion0"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>2</td><td><input type="number" id="numero1" min="0" max="21" required></td><td>
+            <select id="posicion1"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>3</td><td><input type="number" id="numero2" min="0" max="21" required></td><td>
+            <select id="posicion2"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>4</td><td><input type="number" id="numero3" min="0" max="21" required></td><td>
+            <select id="posicion3"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>5</td><td><input type="number" id="numero4" min="0" max="21" required></td><td>
+            <select id="posicion4"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>6</td><td><input type="number" id="numero5" min="0" max="21" required></td><td>
+            <select id="posicion5"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>7</td><td><input type="number" id="numero6" min="0" max="21" required></td><td>
+            <select id="posicion6"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>8</td><td><input type="number" id="numero7" min="0" max="21" required></td><td>
+            <select id="posicion7"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>9</td><td><input type="number" id="numero8" min="0" max="21" required></td><td>
+            <select id="posicion8"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+          <tr><td>10</td><td><input type="number" id="numero9" min="0" max="21" required></td><td>
+            <select id="posicion9"><option value="d">d (derecho)</option><option value="r">r (revés)</option></select></td></tr>
+        </tbody>
+      </table>
+
+      <div class="controls">
+        <button type="submit" class="primary" id="send">Interpretar tirada</button>
+        <button type="button" id="demo">Rellenar ejemplo</button>
+        <button type="button" class="danger" id="clear">Limpiar</button>
+      </div>
+    </form>
+
+    <div style="margin-top:16px">
+      <p class="muted">Resultado:</p>
+      <pre id="resultado">(aquí verás la interpretación)</pre>
+      <div id="imagenes-cartas" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;"></div>
+      <p id="error" class="error"></p>
+    </div>
+  </div>
+
+  <script>
+    function leerCampos(){
+      const numeros=[]; const posiciones=[];
+      for(let i=0;i<10;i++){
+        const val=document.getElementById('numero'+i).value;
+        const pos=document.getElementById('posicion'+i).value;
+        if(val==='') return {error:`Falta el número de la carta ${i+1}`};
+        const n=Number(val);
+        if(Number.isNaN(n)) return {error:`Número inválido en la carta ${i+1}`};
+        if(n<0||n>21) return {error:`El arcano de la carta ${i+1} debe estar entre 0 y 21`};
+        numeros.push(n); posiciones.push(pos);
+      }
+      return {numeros,posiciones};
+    }
+
+    async function enviarTirada(e){
+      e&&e.preventDefault();
+      const out=document.getElementById('resultado');
+      const err=document.getElementById('error');
+      out.textContent='Procesando...'; err.textContent='';
+      const data=leerCampos();
+      if(data.error){ out.textContent=''; err.textContent=data.error; return; }
+      try{
+        const resp=await fetch('/tirada',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+        const json=await resp.json();
+        if(!resp.ok){throw new Error(json.error||'Error del servidor');}
+        out.textContent=json.resultado||'(sin resultado)';
+        const imgDiv = document.getElementById("imagenes-cartas");
+        imgDiv.innerHTML = "";
+        if (json.imagenes) {
+          json.imagenes.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.style.width = "100px";   // tamaño de la carta
+            img.style.borderRadius = "8px";
+            img.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+            imgDiv.appendChild(img);
+          });
+        }
+      }catch(errCatch){
+        console.error(errCatch);
+        out.textContent='';
+        err.textContent=errCatch.message||'Error al conectar con el servidor';
+      }
+    }
+
+    function demo(){
+      const nums=[0,5,12,21,3,7,14,8,1,19];
+      const pos=['d','r','d','d','r','r','d','d','r','d'];
+      for(let i=0;i<10;i++){ document.getElementById('numero'+i).value=nums[i]; document.getElementById('posicion'+i).value=pos[i]; }
+      document.getElementById('resultado').textContent='(pulsa "Interpretar tirada" para ver el resultado)';
+      document.getElementById('error').textContent='';
+    }
+
+    function clearAll(){
+      for(let i=0;i<10;i++){ document.getElementById('numero'+i).value=''; document.getElementById('posicion'+i).value='d'; }
+      document.getElementById('resultado').textContent='(aquí verás la interpretación)';
+      document.getElementById('error').textContent='';
+    }
+
+    document.getElementById('tirada-form').addEventListener('submit',enviarTirada);
+    document.getElementById('demo').addEventListener('click',demo);
+    document.getElementById('clear').addEventListener('click',clearAll);
+  </script>
+</body>
+</html>
